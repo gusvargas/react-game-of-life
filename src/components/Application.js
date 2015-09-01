@@ -26,7 +26,7 @@ const Cell = React.createClass({
 
   render() {
     return (
-      <span style={this.style()} onClick={this.props.onClick.bind()} />
+      <span style={this.style()} onClick={this.props.onClick} />
     );
   }
 });
