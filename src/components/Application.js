@@ -86,20 +86,12 @@ const Grid = React.createClass({
 const Game = React.createClass({
   getInitialState() {
     return {
-      grid: new Map(),
-      gameStarted: false
+      grid: new Map()
     };
   },
 
   componentWillUnmount() {
     clearInterval(this.gameInterval);
-  },
-
-  toggleGame() {
-    if (this.state.gameStarted) {
-      this.stopGame();
-    }
-    this.startGame();
   },
 
   startGame() {
@@ -113,9 +105,6 @@ const Game = React.createClass({
 
   stopGame() {
     clearInterval(this.gameInterval);
-    this.setState({
-      gameStarted: false
-    });
   },
 
   calculateNextState() {
@@ -177,7 +166,8 @@ const Game = React.createClass({
           grid={this.state.grid}
           onCellClick={this.handleCellClick}
           {...this.props} />
-        <button onClick={this.toggleGame}>{this.state.gameStarted ? 'Stop' : 'Start'}</button>
+        <button onClick={this.startGame}>Start</button>
+        <button onClick={this.stopGame}>Stop</button>
       </div>
     );
   }
