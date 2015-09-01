@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, Range, is } from 'immutable';
+import { Map, List, Range, is } from 'immutable';
 
 const CELL_WIDTH = 10;
 const CELL_HEIGHT = 10;
@@ -90,7 +90,8 @@ const Grid = React.createClass({
 const Game = React.createClass({
   getInitialState() {
     return {
-      grid: new Map()
+      grid: new Map(),
+      history: new List()
     };
   },
 
@@ -102,13 +103,22 @@ const Game = React.createClass({
     this.gameInterval = setInterval(() => {
       this.setState({
         grid: this.calculateNextState(),
-        gameStarted: true
+        history: this.state.history.push(this.state.grid)
       });
     }, 100)
   },
 
   stopGame() {
     clearInterval(this.gameInterval);
+  },
+
+  rewind() {
+    const self = this;
+    this.state.history.reverse().forEach((grid) => {
+      setTimeout(() => {
+        self.setState({ grid })
+      }, 100);
+    });
   },
 
   calculateNextState() {
@@ -172,6 +182,7 @@ const Game = React.createClass({
           {...this.props} />
         <button onClick={this.startGame}>Start</button>
         <button onClick={this.stopGame}>Stop</button>
+        <button onClick={this.rewind}>Rewind</button>
       </div>
     );
   }
