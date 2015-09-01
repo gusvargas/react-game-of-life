@@ -91,6 +91,10 @@ const Game = React.createClass({
     };
   },
 
+  componentWillUnmount() {
+    clearInterval(this.gameInterval);
+  },
+
   toggleGame() {
     if (this.state.gameStarted) {
       this.stopGame();
