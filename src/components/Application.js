@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, Range } from 'immutable';
+import { Map, Range, is } from 'immutable';
 
 const CELL_WIDTH = 10;
 const CELL_HEIGHT = 10;
@@ -36,6 +36,10 @@ const Grid = React.createClass({
     grid: React.PropTypes.instanceOf(Map).isRequired,
     width: React.PropTypes.number.isRequired,
     height: React.PropTypes.number.isRequired
+  },
+
+  shouldComponentUpdate(nextProps) {
+    return !is(this.props.grid, nextProps.grid);
   },
 
   style() {
